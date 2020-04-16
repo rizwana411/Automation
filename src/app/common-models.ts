@@ -6,4 +6,11 @@ export interface Clients {
     fname: string;
     lname: string;
   }
-  
+export interface Organization {
+  instance: string;
+  organization: string;
+}
+export interface Teams {
+  name: string;
+  description: string;
+}

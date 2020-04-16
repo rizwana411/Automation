@@ -8,21 +8,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CreateEditClientComponent implements OnInit {
   addClientForm: FormGroup;
-  hide:boolean = true;
-  confhide:boolean = true;
-  constructor(private fb:FormBuilder) { }
+  hide = true;
+  confhide = true;
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.addClientForm = this.fb.group({
-      name: ['',Validators.required],
-      description: ['',Validators.required],
- 
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+
     });
-   
+
   }
 
-  addClient(form){
-    console.log(form)
+  addClient(form) {
+    console.log(form);
   }
 
 }

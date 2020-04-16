@@ -18,6 +18,8 @@ import { ClientListComponent } from './clients/client-list/client-list.component
 
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ClientAddOrgComponent } from './clients/client-add-org/client-add-org.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AutomationComponent,
     DashboardComponent,
     CreateEditClientComponent,
-    ClientListComponent
+    ClientListComponent,
+    ClientAddOrgComponent
   ],
   imports: [
     BrowserModule,
@@ -38,8 +41,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatCheckboxModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule,    
+    FormsModule,
     TabsModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
