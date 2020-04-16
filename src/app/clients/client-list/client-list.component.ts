@@ -10,7 +10,7 @@ import { Clients } from 'src/app/common-models';
 })
 export class ClientListComponent implements OnInit {
 
-  
+
   ELEMENT_DATA: Clients[] = [
     {username: 'admin', fname: 'ABC', lname: 'PQR'},
     {username: 'awxadmin', fname: 'XYZ', lname: 'UVW'},
@@ -19,7 +19,7 @@ export class ClientListComponent implements OnInit {
   ];
   displayedColumns: string[] = ['username', 'fname', 'lname', 'Action'];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-  
+
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   ngOnInit() {

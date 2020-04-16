@@ -14,7 +14,7 @@ const routes: Routes = [
     path: '', component: DashboardComponent,
     children: [
       { path: 'clients', component: ClientsComponent,
-        children:[
+        children: [
           { path: 'create-edit', component: CreateEditClientComponent, data : {some_data : 'some value'} },
           { path: '**', component: ClientListComponent }
         ]

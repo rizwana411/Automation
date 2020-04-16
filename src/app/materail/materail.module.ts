@@ -16,7 +16,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
 
 const matModules =  [MatDialogModule, MatCardModule, MatInputModule, MatButtonModule, MatSidenavModule,
-  MatToolbarModule, MatIconModule, MatMenuModule, MatDividerModule, MatListModule, 
+  MatToolbarModule, MatIconModule, MatMenuModule, MatDividerModule, MatListModule,
   MatTableModule, MatPaginatorModule, MatSelectModule, MatCheckboxModule, MatSortModule];
 
 @NgModule({
