@@ -1,0 +1,42 @@
+<tabset type="pills" [justified]="true">
+    <tab heading="DETAILS">
+
+        <form [formGroup]="addClientForm" (ngSubmit)="addClient(addClientForm)" style="padding: 2%; margin-top: 5%;">
+            <div class="flex-container ">
+                <p class="flex-item">
+                    <mat-form-field>
+                        <input type="text" matInput placeholder="Name" formControlName="name">
+                    </mat-form-field>
+                </p>
+
+                <p class="flex-item">
+                    <mat-form-field>
+                        <input type="text" matInput placeholder="Description" formControlName="description">
+                    </mat-form-field>
+                </p>
+            </div>
+        
+            <!-- <p *ngIf="error" class="error">
+              {{ error }}
+            </p> -->
+
+            <div class="button" style="text-align: right;">
+                <button type="button" class="cancelBtn" mat-button >cancel</button>
+                <button type="submit" class="saveBtn" mat-button >Save</button>
+            </div>
+
+        </form>
+    </tab>
+    <tab heading="TEAMS">
+
+    </tab>
+    <tab heading="AUTOMATION">
+
+    </tab>
+    <tab heading="USERS">
+
+    </tab>
+    <tab heading="ORGANIZATION">
+
+    </tab>
+</tabset>

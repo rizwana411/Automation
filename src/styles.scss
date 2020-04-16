@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-table{
+    width: 100%;
+}
+
+.mat-toolbar.mat-primary{
+    background-color: #616161;
+}
+
+.mat-table-button{
+    float: right;
+    margin-bottom: 10px;
+}
+
+mat-form-field{
+    width: 400px;
+}
+mat-card-title{
+    text-align: center;
+}
+
+th.mat-header-cell {
+    text-align: left;
+    background-color: lightgrey;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: dimgrey;
+}
+.nav-pills .nav-link {
+    border-radius: .25rem;
+    border: 1px solid;
+    color: black;
+    padding: 1%;
+    margin-left: 7%;
+}
