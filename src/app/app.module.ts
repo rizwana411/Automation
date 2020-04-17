@@ -10,16 +10,17 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { HeaderComponent } from './header/header.component';
 import { MaterialModule } from './materail/materail.module';
 import { ClientsComponent } from './clients/clients.component';
-import { TeamsComponent } from './teams/teams.component';
 import { AutomationComponent } from './automation/automation.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateEditClientComponent } from './clients/create-edit-client/create-edit-client.component';
 import { ClientListComponent } from './clients/client-list/client-list.component';
 
+import { HttpClientModule } from '@angular/common/http';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ClientAddOrgComponent } from './clients/client-add-org/client-add-org.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TeamsComponent } from './teams/teams.component';
 
 @NgModule({
   declarations: [
@@ -31,10 +32,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     DashboardComponent,
     CreateEditClientComponent,
     ClientListComponent,
-    ClientAddOrgComponent
+    ClientAddOrgComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSidenavModule,

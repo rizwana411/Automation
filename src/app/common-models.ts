@@ -2,9 +2,8 @@ export class CommonModels {
 }
 
 export interface Clients {
-    username: string;
-    fname: string;
-    lname: string;
+    name: string;
+    desc: string;
   }
 export interface Organization {
   instance: string;

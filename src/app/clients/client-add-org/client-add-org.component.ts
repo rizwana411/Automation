@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { Clients, Organization } from 'src/app/common-models';
+import { Organization } from 'src/app/common-models';
 import { MatTableDataSource } from '@angular/material/table';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 

@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Clients } from 'src/app/common-models';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from 'src/app/api.service';
 
 @Component({
   selector: 'app-client-list',
@@ -12,20 +14,45 @@ export class ClientListComponent implements OnInit {
 
 
   ELEMENT_DATA: Clients[] = [
-    {username: 'admin', fname: 'ABC', lname: 'PQR'},
-    {username: 'awxadmin', fname: 'XYZ', lname: 'UVW'},
-    {username: 'admin1', fname: 'UVW', lname: 'XYZ'},
-    {username: 'admin2', fname: 'PQR', lname: 'ABC'}
+    {name: 'admin', desc: 'ABC'},
+    {name: 'awxadmin', desc: 'XYZ'},
+    {name: 'admin1', desc: 'UVW'},
+    {name: 'admin2', desc: 'PQR'}
   ];
-  displayedColumns: string[] = ['username', 'fname', 'lname', 'Action'];
+  displayedColumns: string[] = ['name', 'desc', 'Action'];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-
+  addClientForm: FormGroup;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  showAddClient:boolean = false;
+  
+  constructor(public apiService:ApiService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
+    this.addClientForm = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+
+    });
+    this.getAllClients();
   }
-  constructor() { }
+
+  getAllClients(){
+    this.apiService.GetAllClients().subscribe(data =>{
+      console.log(data)
+      //this.dataSource = new MatTableDataSource([data]);
+      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+    })
+  }
+  addClient(form) {
+    console.log(form);
+  }
+
+  editClient(element){
+    console.log(element);
+    this.showAddClient = true;
+  }
+
 
 
 }
