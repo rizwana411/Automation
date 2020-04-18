@@ -16,16 +16,31 @@ export class TeamsComponent implements OnInit {
   showAddTeam: boolean;
   checkItem: Array<Teams>;
   ELEMENT_DATA: Teams[] = [
-    {name: 'ABC', description: 'qwerty'},
-    {name: 'XYZ', description: 'qwerty'},
-    {name: 'UVW', description: 'qwerty'},
-    {name: 'PQR', description: 'qwerty'}
+    {name: 'ABC', description: 'ABC'},
+    {name: 'XYZ', description: 'XYZ'},
+    {name: 'UVW', description: 'UVW'},
+    {name: 'PQR', description: 'PQR'}
   ];
   displayedColumns: string[] = ['name', 'description', 'Action'];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
 
-  displayedColumns1: string[] = ['Action', 'name', 'description'];
-  dataSource1 = new MatTableDataSource(this.ELEMENT_DATA);
+  clientColumns: string[] = ['name', 'description'];
+  clientSource = new MatTableDataSource(this.ELEMENT_DATA);
+
+  addClientsColumns: string[] = ['Action', 'name', 'description'];
+  addClientsSource = new MatTableDataSource(this.ELEMENT_DATA);
+
+  automationColumns: string[] = ['name', 'description'];
+  automationSource = new MatTableDataSource(this.ELEMENT_DATA);
+
+  addAutomationColumns: string[] = ['Action', 'name', 'description'];
+  addAutomationSource = new MatTableDataSource(this.ELEMENT_DATA);
+
+  usersColumns: string[] = ['name', 'description'];
+  usersSource = new MatTableDataSource(this.ELEMENT_DATA);
+
+  addUsersColumns: string[] = ['Action', 'name', 'description'];
+  addUsersSource = new MatTableDataSource(this.ELEMENT_DATA);
 
   constructor(private fb: FormBuilder, public modalService: BsModalService) {
     this.addTeamsForm = this.fb.group({
@@ -63,5 +78,26 @@ export class TeamsComponent implements OnInit {
 
   showaddTeamCard() {
     this.showAddTeam = !this.showAddTeam;
+  }
+  openModal(template: TemplateRef<any>) {
+    const config = {
+      class: 'modal-dialog-centered'
+    };
+    this.modalRef = this.modalService.show(template, config);
+  }
+  OnChange(event: any, el: Teams) {
+    if (event.checked === true) {
+      this.checkItem.push(el);
+    } else {
+      const item = this.checkItem.indexOf(el);
+      if (item > -1) {
+        this.checkItem.splice(item, 1);
+      }
+    }
+    // console.log(this.checkItem);
+  }
+
+  submit() {
+    console.log(this.checkItem);
   }
 }
