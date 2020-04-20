@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { Teams } from '../common-models';
 import { MatTableDataSource } from '@angular/material/table';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-teams',
@@ -15,14 +16,15 @@ export class TeamsComponent implements OnInit {
   IsChecked: boolean;
   showAddTeam: boolean;
   checkItem: Array<Teams>;
+  filterValue: string;
   ELEMENT_DATA: Teams[] = [
-    {name: 'ABC', description: 'ABC'},
-    {name: 'XYZ', description: 'XYZ'},
-    {name: 'UVW', description: 'UVW'},
-    {name: 'PQR', description: 'PQR'}
+    {name: 'ABC', description: 'ABC', businessentity: '', tags: '', teamSeqNo: ''},
+    {name: 'XYZ', description: 'XYZ', businessentity: '', tags: '', teamSeqNo: ''},
+    {name: 'UVW', description: 'UVW', businessentity: '', tags: '', teamSeqNo: ''},
+    {name: 'PQR', description: 'PQR', businessentity: '', tags: '', teamSeqNo: ''}
   ];
-  displayedColumns: string[] = ['name', 'description', 'Action'];
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  displayedColumns: string[] = ['name', 'description', 'businessentity', 'tags', 'Action'];
+  dataSource = new MatTableDataSource();
 
   clientColumns: string[] = ['name', 'description'];
   clientSource = new MatTableDataSource(this.ELEMENT_DATA);
@@ -41,39 +43,45 @@ export class TeamsComponent implements OnInit {
 
   addUsersColumns: string[] = ['Action', 'name', 'description'];
   addUsersSource = new MatTableDataSource(this.ELEMENT_DATA);
-
-  constructor(private fb: FormBuilder, public modalService: BsModalService) {
+  selected = 'None';
+  edited: boolean;
+  constructor(private fb: FormBuilder, public modalService: BsModalService,
+              private apiService: ApiService) {
     this.addTeamsForm = this.fb.group({
-      Name: new FormControl('', Validators.required),
-      Description: new FormControl('', Validators.required),
-      clientName: new FormControl('', Validators.required),
-      clientDescription: new FormControl('', Validators.required),
-      automationName: new FormControl('', Validators.required),
-      automationDescription: new FormControl('', Validators.required),
-      usersName: new FormControl('', Validators.required),
-      usersDescription: new FormControl('', Validators.required)
+      name: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      businessentity: new FormControl('', Validators.required),
+      tags: new FormControl('' , Validators.required),
     });
   }
 
   ngOnInit(): void {
     this.checkItem = [];
     this.showAddTeam = false;
+    this.getAllTeamsData();
+    this.edited = false;
   }
 
   addTeam(form) {
-    console.log(form.value);
+    console.log(form);
+    if (this.edited) {
+      console.log('When edited', form.teamSeqNo);
+      this.apiService.updateTeam(form.teamSeqNo, form.value).subscribe(data => {
+        console.log('Team Edited');
+      });
+    } else {
+      this.apiService.createTeam(form.value).subscribe(data => {
+        console.log('Team Created');
+      });
+    }
   }
   editTeams(element) {
-    console.log(element);
     this.showAddTeam = true;
-    this.addTeamsForm.controls.Name.setValue(element.name);
-    this.addTeamsForm.controls.Description.setValue(element.description);
-    this.addTeamsForm.controls.clientName.setValue(element.clientName);
-    this.addTeamsForm.controls.clientDescription.setValue(element.clientDescription);
-    this.addTeamsForm.controls.automationName.setValue(element.automationName);
-    this.addTeamsForm.controls.automationDescription.setValue(element.automationDescription);
-    this.addTeamsForm.controls.usersName.setValue(element.usersName);
-    this.addTeamsForm.controls.usersDescription.setValue(element.usersDescription);
+    this.addTeamsForm.controls.name.setValue(element.name);
+    this.addTeamsForm.controls.description.setValue(element.description);
+    this.addTeamsForm.controls.businessentity.setValue(element.businessentity);
+    this.edited = true;
+    this.addTeam(element);
   }
 
   showaddTeamCard() {
@@ -94,10 +102,31 @@ export class TeamsComponent implements OnInit {
         this.checkItem.splice(item, 1);
       }
     }
-    // console.log(this.checkItem);
   }
 
   submit() {
     console.log(this.checkItem);
+  }
+
+  getAllTeamsData() {
+    this.apiService.getAllTeams().subscribe(response => {
+      console.log(response);
+      this.dataSource = new MatTableDataSource(response as any);
+    });
+  }
+
+  searchValue(event: any) {
+    this.filterValue = event.target.value;
+    console.log(this.filterValue);
+    this.apiService.searchTeams(this.filterValue).subscribe(data => {
+      console.log(data);
+      this.dataSource = new MatTableDataSource(data as any);
+    });
+  }
+
+  deleteTeams(element) {
+    this.apiService.deleteTeam(element.name).subscribe(data => {
+      console.log('Team Deleted');
+    });
   }
 }
