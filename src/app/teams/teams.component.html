@@ -2,7 +2,7 @@
 <mat-divider class="navigation-divider"></mat-divider>
 <div>
   <ng-container *ngIf="showAddTeam">
-    <form [formGroup]="addTeamsForm" (ngSubmit)="addTeam(addTeamsForm)">
+    <form [formGroup]="addTeamsForm">
       <mat-card>
         <mat-card-subtitle style="margin-top: 10px; font-weight: bold;">New Team</mat-card-subtitle>
         <tabset type="pills" [justified]="true">
@@ -19,22 +19,26 @@
                         <input type="text" matInput placeholder="Description" formControlName="Description">
                     </mat-form-field>
                 </p>
+                <p class="flex-item">
+                  <mat-form-field>
+                    <mat-label>Select Business Entity</mat-label>
+                    <mat-select formControlName="businessentity">
+                      <mat-option>None</mat-option>
+                      <mat-option value="Manages Services">Manages Services</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </p>
+                <p class="flex-item">
+                  <tag-input formControlName="tags" [modelAsStrings]="true" name="tags" ></tag-input>
+                </p>
+
+            </div>
+            <div class="button" style="text-align: right; margin-top: 10px;">
+              <button type="button" class="cancelBtn" mat-button (click)="showaddTeamCard()">cancel</button>
+              <button type="submit" [ngClass]="{saveBtn: addTeamsForm.valid}" mat-button [disabled]="addTeamsForm.invalid" (click)="addTeam(addTeamsForm)">Save</button>
             </div>
           </tab>
           <tab heading="CLIENTS">
-            <div class="flex-container ">
-                <p class="flex-item">
-                    <mat-form-field>
-                        <input type="text" matInput placeholder="Name" formControlName="clientName">
-                    </mat-form-field>
-                </p>
-
-                <p class="flex-item">
-                    <mat-form-field>
-                        <input type="text" matInput placeholder="Description" formControlName="clientDescription">
-                    </mat-form-field>
-                </p>
-            </div>
             <div>
               <mat-icon class="addBtn" (click)="openModal(template)">add_box</mat-icon>
               <table mat-table [dataSource]="clientSource" matSort class="mat-elevation-z8">
@@ -96,19 +100,6 @@
             </ng-template>
           </tab>
           <tab heading="AUTOMATION">
-            <div class="flex-container ">
-                <p class="flex-item">
-                    <mat-form-field>
-                        <input type="text" matInput placeholder="Name" formControlName="automationName">
-                    </mat-form-field>
-                </p>
-
-                <p class="flex-item">
-                    <mat-form-field>
-                        <input type="text" matInput placeholder="Description" formControlName="automationDescription">
-                    </mat-form-field>
-                </p>
-            </div>
             <div>
               <mat-icon class="addBtn" (click)="openModal(template)">add_box</mat-icon>
               <table mat-table [dataSource]="automationSource" matSort class="mat-elevation-z8">
@@ -170,19 +161,6 @@
             </ng-template>
           </tab>
           <tab heading="USERS">
-            <div class="flex-container ">
-                <p class="flex-item">
-                    <mat-form-field>
-                        <input type="text" matInput placeholder="Name" formControlName="usersName">
-                    </mat-form-field>
-                </p>
-
-                <p class="flex-item">
-                    <mat-form-field>
-                        <input type="text" matInput placeholder="Description" formControlName="usersDescription">
-                    </mat-form-field>
-                </p>
-            </div>
             <div>
               <mat-icon class="addBtn" (click)="openModal(template)">add_box</mat-icon>
               <table mat-table [dataSource]="usersSource" matSort class="mat-elevation-z8">
@@ -244,15 +222,15 @@
             </ng-template>
           </tab>
         </tabset>
-        <div class="button" style="text-align: right; margin-top: 10px;">
-          <button type="button" class="cancelBtn" mat-button (click)="showaddTeamCard()">cancel</button>
-          <button type="submit" [ngClass]="{saveBtn: addTeamsForm.valid}" mat-button [disabled]="addTeamsForm.invalid">Save</button>
-        </div>
       </mat-card>
     </form>
   </ng-container>
   <mat-card style="margin-top: 20px;">
     <mat-card-subtitle style="font-weight: bold;">TEAMS</mat-card-subtitle>
+    <mat-form-field class="example-full-width">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Search Clients" (change)="searchValue($event)">
+    </mat-form-field>
     <mat-icon class="addBtn" (click)="showaddTeamCard()">add_box</mat-icon>
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
@@ -268,12 +246,24 @@
         <td mat-cell *matCellDef="let element"> {{element.description}} </td>
       </ng-container>
 
+       <!-- businessentity Column -->
+       <ng-container matColumnDef="businessentity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Business Entity </th>
+        <td mat-cell *matCellDef="let element"> {{element.businessentity}} </td>
+      </ng-container>
+
+       <!-- tags Column -->
+       <ng-container matColumnDef="tags">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tags </th>
+        <td mat-cell *matCellDef="let element"> {{element.tags}} </td>
+      </ng-container>
+
     <!-- Symbol Column -->
       <ng-container matColumnDef="Action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
         <td mat-cell *matCellDef="let element" >
             <mat-icon style="margin-right: 15%; cursor: pointer;" (click)="editTeams(element)">edit</mat-icon>
-            <mat-icon>delete</mat-icon>
+            <mat-icon (click)="deleteTeams(element)">delete</mat-icon>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

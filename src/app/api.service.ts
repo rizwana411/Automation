@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Clients, Organization } from './common-models';
+import { Clients, Organization, Teams } from './common-models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient) {}
 
   GetAllClients() {
     return this.http.get('/cmp/api/global/stackstorm-dd/clients');
@@ -32,5 +32,23 @@ export class ApiService {
     return this.http.post('/cmp/basic/api/global/stackstorm-dd/bindorgtoclient?seqNo='+seqNo,orgs);
   }
 
+  getAllTeams() {
+    return this.http.get('/cmp/api/global/stackstorm-dd/teams');
+  }
 
+  searchTeams(getTeamDetails: string) {
+    return this.http.get('/cmp/api/global/stackstorm-dd/team?name=' + getTeamDetails);
+  }
+
+  createTeam(team: Teams[]) {
+    return this.http.post('/cmp/api/global/stackstorm-dd/team', team);
+  }
+
+  updateTeam(seqNo: string, team: Teams[]) {
+    return this.http.post('/cmp/api/global/stackstorm-dd/team?teamSeqNo=' + seqNo, team);
+  }
+
+  deleteTeam(name: string) {
+    return this.http.delete('/cmp/api/global/stackstorm-dd/team?name=' + name);
+  }
 }

@@ -21,6 +21,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ClientAddOrgComponent } from './clients/client-add-org/client-add-org.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TeamsComponent } from './teams/teams.component';
+import { TagInputModule } from 'ngx-chips';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { TeamsComponent } from './teams/teams.component';
     ReactiveFormsModule,
     FormsModule,
     TabsModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TagInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
