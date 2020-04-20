@@ -48,8 +48,8 @@ export class TeamsComponent implements OnInit {
   constructor(private fb: FormBuilder, public modalService: BsModalService,
               private apiService: ApiService) {
     this.addTeamsForm = this.fb.group({
-      Name: new FormControl('', Validators.required),
-      Description: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
       businessentity: new FormControl('', Validators.required),
       tags: new FormControl('' , Validators.required),
     });
@@ -77,8 +77,8 @@ export class TeamsComponent implements OnInit {
   }
   editTeams(element) {
     this.showAddTeam = true;
-    this.addTeamsForm.controls.Name.setValue(element.name);
-    this.addTeamsForm.controls.Description.setValue(element.description);
+    this.addTeamsForm.controls.name.setValue(element.name);
+    this.addTeamsForm.controls.description.setValue(element.description);
     this.addTeamsForm.controls.businessentity.setValue(element.businessentity);
     this.edited = true;
     this.addTeam(element);
