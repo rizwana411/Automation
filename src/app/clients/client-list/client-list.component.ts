@@ -4,6 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { Clients } from 'src/app/common-models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/api.service';
+import { ClientsComponent } from '../clients.component';
 
 @Component({
   selector: 'app-client-list',
@@ -13,14 +14,9 @@ import { ApiService } from 'src/app/api.service';
 export class ClientListComponent implements OnInit {
 
 
-  ELEMENT_DATA: Clients[] = [
-    {name: 'admin', desc: 'ABC'},
-    {name: 'awxadmin', desc: 'XYZ'},
-    {name: 'admin1', desc: 'UVW'},
-    {name: 'admin2', desc: 'PQR'}
-  ];
-  displayedColumns: string[] = ['name', 'desc', 'Action'];
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  ELEMENT_DATA;
+  displayedColumns: string[] = ['name', 'description', 'Action'];
+  dataSource = new MatTableDataSource();
   addClientForm: FormGroup;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   showAddClient:boolean = false;
@@ -38,10 +34,10 @@ export class ClientListComponent implements OnInit {
   }
 
   getAllClients(){
-    this.apiService.GetAllClients().subscribe(data =>{
+    this.apiService.GetAllClients().subscribe(data  =>{
       console.log(data)
-      //this.dataSource = new MatTableDataSource([data]);
-      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+       this.dataSource = new MatTableDataSource( <any> data);
+      //this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
     })
   }
   addClient(form) {
