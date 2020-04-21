@@ -34,7 +34,7 @@
 
             </div>
             <div class="button" style="text-align: right; margin-top: 10px;">
-              <button type="button" class="cancelBtn" mat-button (click)="showaddTeamCard()">cancel</button>
+              <button type="button" class="cancelBtn" mat-button (click)="showaddTeamCard()">Cancel </button>
               <button type="submit" [ngClass]="{saveBtn: addTeamsForm.valid}" mat-button [disabled]="addTeamsForm.invalid" (click)="addTeam(addTeamsForm)">Save</button>
             </div>
           </tab>
@@ -232,44 +232,50 @@
       <input matInput placeholder="Search Clients" (change)="searchValue($event)">
     </mat-form-field>
     <mat-icon class="addBtn" (click)="showaddTeamCard()">add_box</mat-icon>
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <div *ngIf="!showSpinner">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-    <!-- Name Column -->
-      <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
+      <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
 
-      <!-- Description Column -->
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-      </ng-container>
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
 
-       <!-- businessentity Column -->
-       <ng-container matColumnDef="businessentity">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Business Entity </th>
-        <td mat-cell *matCellDef="let element"> {{element.businessentity}} </td>
-      </ng-container>
+        <!-- businessentity Column -->
+        <ng-container matColumnDef="businessentity">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Business Entity </th>
+          <td mat-cell *matCellDef="let element"> {{element.businessentity}} </td>
+        </ng-container>
 
-       <!-- tags Column -->
-       <ng-container matColumnDef="tags">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tags </th>
-        <td mat-cell *matCellDef="let element"> {{element.tags}} </td>
-      </ng-container>
+        <!-- tags Column -->
+        <ng-container matColumnDef="tags">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tags </th>
+          <td mat-cell *matCellDef="let element"> {{element.tags}} </td>
+        </ng-container>
 
-    <!-- Symbol Column -->
-      <ng-container matColumnDef="Action">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-        <td mat-cell *matCellDef="let element" >
-            <mat-icon style="margin-right: 15%; cursor: pointer;" (click)="editTeams(element)">edit</mat-icon>
-            <mat-icon (click)="deleteTeams(element)">delete</mat-icon>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
+      <!-- Symbol Column -->
+        <ng-container matColumnDef="Action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+          <td mat-cell *matCellDef="let element" >
+              <mat-icon style="margin-right: 15%; cursor: pointer;" (click)="editTeams(element)">edit</mat-icon>
+              <mat-icon (click)="deleteTeams(element)">delete</mat-icon>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <div *ngIf="showSpinner" style="    display: flex;
+    align-items: center;
+    justify-content: center;">
+      <mat-spinner></mat-spinner>
+    </div>
   </mat-card>
 </div>
 

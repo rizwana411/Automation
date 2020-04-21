@@ -44,7 +44,7 @@ export class ApiService {
     return this.http.post('/cmp/api/global/stackstorm-dd/team', team);
   }
 
-  updateTeam(seqNo: string, team: Teams[]) {
+  updateTeam(seqNo: number, team: Teams[]) {
     return this.http.post('/cmp/api/global/stackstorm-dd/team?teamSeqNo=' + seqNo, team);
   }
 

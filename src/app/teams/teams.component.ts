@@ -45,6 +45,8 @@ export class TeamsComponent implements OnInit {
   addUsersSource = new MatTableDataSource(this.ELEMENT_DATA);
   selected = 'None';
   edited: boolean;
+  showSpinner: boolean;
+  seqNo: number;
   constructor(private fb: FormBuilder, public modalService: BsModalService,
               private apiService: ApiService) {
     this.addTeamsForm = this.fb.group({
@@ -63,10 +65,8 @@ export class TeamsComponent implements OnInit {
   }
 
   addTeam(form) {
-    console.log(form);
-    if (this.edited) {
-      console.log('When edited', form.teamSeqNo);
-      this.apiService.updateTeam(form.teamSeqNo, form.value).subscribe(data => {
+    if (this.edited && this.seqNo != null || this.seqNo !== undefined ) {
+      this.apiService.updateTeam(this.seqNo, form.value).subscribe(data => {
         console.log('Team Edited');
       });
     } else {
@@ -80,8 +80,8 @@ export class TeamsComponent implements OnInit {
     this.addTeamsForm.controls.name.setValue(element.name);
     this.addTeamsForm.controls.description.setValue(element.description);
     this.addTeamsForm.controls.businessentity.setValue(element.businessentity);
+    this.seqNo = element.teamSeqNo;
     this.edited = true;
-    this.addTeam(element);
   }
 
   showaddTeamCard() {
@@ -109,17 +109,21 @@ export class TeamsComponent implements OnInit {
   }
 
   getAllTeamsData() {
+    this.showSpinner = true;
     this.apiService.getAllTeams().subscribe(response => {
       console.log(response);
+      this.showSpinner = false;
       this.dataSource = new MatTableDataSource(response as any);
     });
   }
 
   searchValue(event: any) {
+    this.showSpinner = true;
     this.filterValue = event.target.value;
     console.log(this.filterValue);
     this.apiService.searchTeams(this.filterValue).subscribe(data => {
       console.log(data);
+      this.showSpinner = false;
       this.dataSource = new MatTableDataSource(data as any);
     });
   }
