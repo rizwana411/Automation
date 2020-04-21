@@ -22,6 +22,7 @@ import { ClientAddOrgComponent } from './clients/client-add-org/client-add-org.c
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TeamsComponent } from './teams/teams.component';
 import { TagInputModule } from 'ngx-chips';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { TagInputModule } from 'ngx-chips';
     TabsModule.forRoot(),
     ModalModule.forRoot(),
     TagInputModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
